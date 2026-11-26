@@ -1,8 +1,5 @@
 package dev.felipeazsantos.ecom_app.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,24 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.felipeazsantos.ecom_app.entity.User;
+import dev.felipeazsantos.ecom_app.service.UserService;
+import lombok.RequiredArgsConstructor;
 
-
-@RestController 
+@RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private List<User> userList = new ArrayList<>(){{
-        add(new User(1L, "Felipe", "Azevedo"));
-    }};
-    
-    @GetMapping 
+    private final UserService userService;
+
+    @GetMapping
     public ResponseEntity<?> getAllUsers() {
-        return ResponseEntity.ok(userList);
+        return ResponseEntity.ok(userService.fetchAllUsers());
     }
 
-    @PostMapping 
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userList.add(user);
+        var userList = userService.addUser(user);
         return ResponseEntity.ok(userList);
     }
 }
