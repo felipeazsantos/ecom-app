@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        var userList = userService.addUser(user);
-        return ResponseEntity.ok(userList);
+        userService.addUser(user);
+        return ResponseEntity.ok("User added successfully");
     }
 }
